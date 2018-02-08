@@ -1,0 +1,111 @@
+﻿<controls:UiServiceAwareWindow
+    x:Class="Test.LogWindow.LogSetting.LogSettingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:LogSetting="clr-namespace:Test.LogWindow.LogSetting"
+    xmlns:controls="clr-namespace:CatLogger.Controls"
+    Title="LogSettingWindow"
+    Width="600"
+    Height="300">
+    <Grid>
+        <Grid.Resources />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="192" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Log Level" />
+            <ComboBox
+                Name="_logLevel"
+                Width="100"
+                HorizontalAlignment="Left"
+                SelectionChanged="_logLevel_SelectionChanged" />
+
+            <Button
+                Width="100"
+                HorizontalAlignment="Left"
+                Click="Button_Click"
+                Content="GC Collect" />
+            <CheckBox
+                Checked="CheckBox_Checked"
+                Content="Show Calling Path"
+                Unchecked="CheckBox_Unchecked" />
+            <CheckBox
+                x:Name="showNativeLogButton"
+                Click="ShowNativeLogButton_Click"
+                Content="Show Native Log" />
+            <Button
+                Width="192"
+                Height="28.653"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                Click="OnDumpClick"
+                Content="Dump events for all services" />
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Label
+                Height="26.833"
+                Margin="8,0"
+                VerticalAlignment="Top"
+                Content="Log filter">
+                <Label.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="Black" />
+                        <GradientStop Offset="1" Color="White" />
+                    </LinearGradientBrush>
+                </Label.Background>
+            </Label>
+            <Button
+                Width="82.28"
+                Height="27"
+                Margin="8,29,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="RefreshListClick"
+                Content="Refresh List" />
+            <Button
+                Width="117.834"
+                Height="27"
+                Margin="0,29,8,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="ResetListClick"
+                Content="Reset List" />
+            <ListBox
+                Name="_logFilterList"
+                Margin="8,60,8,8"
+                HorizontalContentAlignment="Stretch">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type LogSetting:FilterViewModel}">
+                        <Grid>
+                            <TextBlock
+                                Margin="0,0,100,0"
+                                HorizontalAlignment="Stretch"
+                                Text="{Binding AssemblyName}" />
+                            <ComboBox
+                                Width="100"
+                                HorizontalAlignment="Right"
+                                ItemsSource="{LogSetting:TraceLevelEnumToItemsSource}"
+                                SelectedItem="{Binding TraceLevel}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button
+                Height="27"
+                Margin="104,29,144,0"
+                VerticalAlignment="Top"
+                Click="DisableAllClick"
+                Content="Disable All" />
+
+        </Grid>
+    </Grid>
+</controls:UiServiceAwareWindow>
+
+
+
